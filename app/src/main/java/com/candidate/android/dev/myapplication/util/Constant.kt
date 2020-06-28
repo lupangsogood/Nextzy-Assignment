@@ -18,7 +18,8 @@ class Constant {
 
         const val DATABASE_NAME = "NextzyDB"
 
-        fun getPokemonImage(index: String): String {
+        fun getPokemonImage(url: String): String {
+            val index = url.substringAfter("pokemon/").substringBefore("/")
             return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png"
         }
 

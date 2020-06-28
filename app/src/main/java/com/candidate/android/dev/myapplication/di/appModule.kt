@@ -15,8 +15,8 @@ import org.koin.dsl.module
 
 
 val appModule = module {
-    single { GetPokemonImpl() }
-    viewModel { MainViewModel(get()) }
+    single { GetPokemonImpl(get()) }
+    viewModel { MainViewModel(get(),get()) }
     viewModel { DetailViewModel(get()) }
 }
 

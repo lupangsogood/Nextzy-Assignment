@@ -22,23 +22,21 @@ class AdapterMainScreen : RecyclerView.Adapter<MainScreenViewHolder>() {
         )
     }
 
-
-
     override fun getItemCount(): Int {
         return pokeDataList.size
     }
 
     override fun onBindViewHolder(holder: MainScreenViewHolder, position: Int) {
         val data = pokeDataList[position]
-        data.let { holder.bindCharacter(it, position.plus(1)) }
+        data.let { holder.bindCharacter(it) }
         holder.itemView.setOnClickListener {
             detailCallback?.invoke(position.plus(1))
         }
     }
 
-    fun setPokeData(dataList: PokemonArrayList,clearData:Boolean) {
+    fun setPokeData(dataList: List<PokeIndexResult>) {
         this.pokeDataList.clear()
-        this.pokeDataList.addAll(dataList!!)
+        this.pokeDataList.addAll(dataList)
         notifyDataSetChanged()
     }
 
@@ -49,10 +47,10 @@ class AdapterMainScreen : RecyclerView.Adapter<MainScreenViewHolder>() {
 
 class MainScreenViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-    fun bindCharacter(data: PokeIndexResult, position: Int) {
+    fun bindCharacter(data: PokeIndexResult) {
         itemView.let {
             it.pokeName.text = data.name
-            it.pokeImage.loadFromURL(Constant.getPokemonImage("$position"))
+            it.pokeImage.loadFromURL(Constant.getPokemonImage("${data.url}"))
         }
     }
 }
