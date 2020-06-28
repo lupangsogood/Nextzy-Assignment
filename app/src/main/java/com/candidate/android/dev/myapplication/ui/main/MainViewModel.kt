@@ -20,14 +20,14 @@ class MainViewModel(private val service: GetPokemonImpl) : BaseViewModel() {
         get() = _pokemonList
 
     var index = 0
+    var isRefresh = false
     var clearData = false
     var backPress = false
 
-
-    fun getPokemonList() {
+    fun getAllPokemonName(){
         if (!backPress){
             viewModelScope.launch {
-                val result = service.getPokemon(null,pokemonList.value?.size)
+                val result = service.getPokemon(1000,0)
                 clearData = true
                 when (result.isSuccessful()) {
                     true -> {
@@ -40,11 +40,29 @@ class MainViewModel(private val service: GetPokemonImpl) : BaseViewModel() {
                     }
                 }
             }
-        }else{
-            Timber.d("NON ")
         }
     }
 
+    fun getPokemonList() {
+
+        //อาจจะต้องเปลี่ยนไปแรกจาก Cache
+        if (!backPress){
+            viewModelScope.launch {
+                val result = service.getPokemon(null,pokemonList.value?.size)
+                clearData = true
+                when (result.isSuccessful()) {
+                    true -> {
+                        if (_pokemonList.value.isNullOrEmpty() || isRefresh) {
+                            _pokemonList.value = result.data?.results
+                        }
+                    }
+                    false -> {
+                        Timber.d(result.message)
+                    }
+                }
+            }
+        }
+    }
     fun getNextPagePokemon() {
         index = index.plus(20)
         viewModelScope.launch {

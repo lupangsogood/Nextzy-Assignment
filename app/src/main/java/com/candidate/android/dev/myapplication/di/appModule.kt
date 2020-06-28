@@ -1,6 +1,8 @@
 package com.candidate.android.dev.myapplication.di
 
 import androidx.room.Room
+import com.candidate.android.dev.myapplication.data.Local.AppDatabase
+import com.candidate.android.dev.myapplication.data.Local.Repository.PokeImpl
 //import com.candidate.android.dev.myapplication.data.Local.AppDatabase
 //import com.candidate.android.dev.myapplication.data.Local.Repository.PokeImpl
 import com.candidate.android.dev.myapplication.data.Remote.Repository.GetPokemonImpl
@@ -19,12 +21,12 @@ val appModule = module {
 }
 
 val roomModule = module {
-//    single {
-//        Room.databaseBuilder(androidApplication(), AppDatabase::class.java,Constant.DATABASE_NAME)
-//            .fallbackToDestructiveMigration()
-//            .build()
-//    }
-//    single { get<AppDatabase>().pokeDAO()}
-//
-//    single { PokeImpl(get())}
+    single {
+        Room.databaseBuilder(androidApplication(), AppDatabase::class.java,Constant.DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+    single { get<AppDatabase>().pokeDAO()}
+
+    single { PokeImpl(get()) }
 }

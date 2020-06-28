@@ -78,6 +78,7 @@ class MainFragment : Fragment() {
         rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
+                    binding.swipeRefresh.isRefreshing = true
                     setupScroll(false)
                     CoroutineScope(IO).launch {
                         viewModel.getNextPagePokemon()
@@ -90,6 +91,7 @@ class MainFragment : Fragment() {
     private fun setupPokeData(pokedDataList: PokemonArrayList) {
         adapter.setPokeData(pokedDataList, viewModel.clearData)
         setupScroll(false)
+        binding.swipeRefresh.isRefreshing =false
     }
 
     private fun setOnclickShowDetail() {
@@ -103,16 +105,17 @@ class MainFragment : Fragment() {
     }
 
     private fun setupScroll(canScroll: Boolean) {
-        binding.swipeRefresh.isRefreshing = canScroll
         binding.rvMain.isVerticalScrollBarEnabled = canScroll
     }
 
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
+            viewModel.backPress = false
+            viewModel.isRefresh = true
+            binding.swipeRefresh.isRefreshing = true
             CoroutineScope(IO).launch {
                 viewModel.getPokemonList()
             }
-            binding.swipeRefresh.isRefreshing = false
         }
     }
 
