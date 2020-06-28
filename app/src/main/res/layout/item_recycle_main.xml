@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:elevation="@dimen/margin_20"
+        app:cardCornerRadius="@dimen/margin_8"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pokeImage"
+                android:layout_width="@dimen/margin_100"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:transitionName="@string/transition_image"
+                app:srcCompat="@drawable/ic_launcher_foreground"
+                android:visibility="visible"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokeStat"
+                android:layout_width="@dimen/margin_100"
+                android:layout_height="@dimen/margin_60"
+                android:fontFamily="@font/teko_bold"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_8"
+                android:textSize="@dimen/poke_stat_text_size"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pokeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/roboto_mono_bold"
+                android:gravity="center"
+                android:text="pokemon name"
+                android:textSize="@dimen/poke_type_text_size" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
