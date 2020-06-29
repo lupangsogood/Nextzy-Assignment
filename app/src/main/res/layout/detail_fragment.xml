@@ -19,8 +19,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardPokeDetail"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/content_width"
         android:layout_height="0dp"
+        android:foregroundGravity="center"
         android:layout_marginStart="@dimen/margin_50"
         android:layout_marginTop="@dimen/margin_8"
         android:layout_marginEnd="@dimen/margin_50"
@@ -43,9 +44,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_14"
                 android:layout_marginTop="@dimen/margin_8"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
                 android:text="Pikachu"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
@@ -56,8 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8"
                 android:text="Weight : 24"
-                android:textStyle="bold"
                 android:textColor="@android:color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/pokeDetailHeight"
                 app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintStart_toEndOf="@+id/pokeDetailName"
@@ -69,39 +70,46 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginEnd="@dimen/margin_8"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
                 android:text="Height : 4"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPokeDetailSprites"
                 android:layout_width="match_parent"
-                android:background="@color/fire"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_20"
+                android:background="@color/fire"
                 android:padding="@dimen/margin_8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pokeDetailName" />
+                app:layout_constraintTop_toBottomOf="@+id/pokeDetailName"
+                tools:listitem="@layout/item_recycleview_poke_sprites" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPokeDetailType"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.085"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvPokeDetailSprites" />
+                app:layout_constraintTop_toBottomOf="@id/rvPokeDetailSprites"
+                tools:listitem="@layout/item_recycleview_poke_type" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPokeDetailStats"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                tools:listitem="@layout/item_recycle_main"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rvPokeDetailType" />
         </androidx.constraintlayout.widget.ConstraintLayout>

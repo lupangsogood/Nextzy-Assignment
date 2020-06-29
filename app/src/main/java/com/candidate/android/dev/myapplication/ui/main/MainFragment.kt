@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.candidate.android.dev.myapplication.data.Model.PokeIndex.PokeIndexResult
 import com.candidate.android.dev.myapplication.databinding.MainFragmentBinding
@@ -63,7 +62,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initInstance() {
-        viewModel.showRefresh()
+        viewModel.isShowRefresh()
         listenerEditText()
         setupSwipeRefresh()
         setOnclickShowDetail()
@@ -71,13 +70,10 @@ class MainFragment : Fragment() {
         setAutoCompleteItem()
 
         viewModel.pokemonList.observe(viewLifecycleOwner, Observer { data ->
+
             when (!data.isNullOrEmpty()) {
                 true -> {
-                    if (!viewModel.backPress) {
-                        setupPokeData(data)
-                    } else {
-                        viewModel.notShowRefresh()
-                    }
+                    setupPokeData(data)
                 }
             }
         })
@@ -94,13 +90,11 @@ class MainFragment : Fragment() {
     private fun setMainAdapter() {
         val rvMain = binding.rvMain
         rvMain.adapter = adapter
-        rvMain.layoutManager =
-            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
         rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.showRefresh()
-                    viewModel.canNotScroll()
+                    viewModel.isShowRefresh()
+                    viewModel.isCanNotScroll()
                     CoroutineScope(IO).launch {
                         viewModel.getNextPagePokemon()
                     }
@@ -112,8 +106,10 @@ class MainFragment : Fragment() {
     private fun setupPokeData(pokedDataList: List<PokeIndexResult>) {
         val flag = viewModel.isSearch
         adapter.setPokeData(pokedDataList)
-        viewModel.canScroll()
-        viewModel.notShowRefresh()
+        viewModel.isCanScroll()
+        viewModel.isNotShowRefresh()
+        viewModel.isNotBackPress()
+        viewModel.isNotPullRefresh()
         when (flag) {
             true -> {
                 binding.rvMain.scrollToPosition(0)
@@ -137,7 +133,8 @@ class MainFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             clearAutoCompText()
             viewModel.isNotBackPress()
-            viewModel.showRefresh()
+            viewModel.isShowRefresh()
+            viewModel.isPullRefresh()
             CoroutineScope(IO).launch {
                 viewModel.getRefreshPokemon()
             }
@@ -170,7 +167,7 @@ class MainFragment : Fragment() {
             )
 
             binding.searchEditText.setOnItemClickListener { parent, view, position, id ->
-                viewModel.showRefresh()
+                viewModel.isShowRefresh()
                 hideSoftKeyboard()
                 clearEditTextFocus()
                 viewModel.setupPokeNameToGetData(it[position])
