@@ -41,6 +41,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initInstance()
         viewModel.pokemonCacheData.observe(viewLifecycleOwner, Observer { data ->
             if (data.isNullOrEmpty()) {
                 CoroutineScope(IO).launch {
@@ -59,8 +60,6 @@ class MainFragment : Fragment() {
                 viewModel.setUpPokeMainData(data)
             }
         })
-        initInstance()
-
     }
 
     private fun initInstance() {
@@ -96,17 +95,6 @@ class MainFragment : Fragment() {
     private fun setMainAdapter() {
         val rvMain = binding.rvMain
         rvMain.adapter = adapter
-        rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.isShowRefresh()
-                    viewModel.isCanNotScroll()
-                    CoroutineScope(IO).launch {
-                        viewModel.getNextPagePokemon()
-                    }
-                }
-            }
-        })
     }
 
     private fun setupPokeData(pokedDataList: List<PokeIndexResult>) {
@@ -120,6 +108,7 @@ class MainFragment : Fragment() {
                 binding.rvMain.scrollToPosition(0)
             }
             false -> {
+
             }
         }
     }
@@ -196,7 +185,7 @@ class MainFragment : Fragment() {
         binding.searchEditText.clearFocus()
     }
 
-    private fun reloadData(){
+    private fun reloadData() {
         clearAutoCompText()
         viewModel.isNotBackPress()
         viewModel.isShowRefresh()

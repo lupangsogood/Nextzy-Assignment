@@ -45,6 +45,7 @@ class MainViewModel(private val service: GetPokemonImpl, private val cache: Poke
 
     var pokemonNameCacheData: LiveData<List<String>> = Transformations.switchMap(name) {
         _pokemonList.value?.clear()
+        _pokemonList.notifyObserver()
         cache.searchPokemonName(it)
     }
 
@@ -62,26 +63,10 @@ class MainViewModel(private val service: GetPokemonImpl, private val cache: Poke
         }
     }
 
-    fun getNextPagePokemon() {
-        if (_pokemonList.value?.size ?: 0 >= 20) {
-            CoroutineScope(Main).launch {
-                isNotSearch()
-                index.value = _pokemonList.value?.size!!
-            }
-        } else {
-            CoroutineScope(Main).launch {
-                isNotSearch()
-                isNotShowRefresh()
-                isCanNotScroll()
-            }
-        }
-    }
-
     fun setUpPokeMainData(data: List<PokeIndexResult>) {
             CoroutineScope(Main).launch {
                 _pokemonList.value!!.addAll(data)
                 _pokemonList.notifyObserver()
-                isNotBackPress()
         }
     }
 

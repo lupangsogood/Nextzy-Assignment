@@ -9,12 +9,13 @@ import com.candidate.android.dev.myapplication.data.Model.PokeIndex.PokeIndexRes
 import com.candidate.android.dev.myapplication.data.PokemonArrayList
 import com.candidate.android.dev.myapplication.extension.loadFromURL
 import com.candidate.android.dev.myapplication.util.Constant
+import com.candidate.android.dev.myapplication.util.Constant.Companion.getPokemonIndex
 import kotlinx.android.synthetic.main.item_recycle_main.view.*
 
 class AdapterMainScreen : RecyclerView.Adapter<MainScreenViewHolder>() {
 
     private var pokeDataList = PokemonArrayList()
-    private var detailCallback :((position:Int)->Unit)? = null
+    private var detailCallback: ((position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainScreenViewHolder {
         return MainScreenViewHolder(
@@ -29,8 +30,9 @@ class AdapterMainScreen : RecyclerView.Adapter<MainScreenViewHolder>() {
     override fun onBindViewHolder(holder: MainScreenViewHolder, position: Int) {
         val data = pokeDataList[position]
         data.let { holder.bindCharacter(it) }
+        val index = getPokemonIndex(data.url!!).toInt()
         holder.itemView.setOnClickListener {
-            detailCallback?.invoke(position.plus(1))
+            detailCallback?.invoke(index)
         }
     }
 
@@ -40,7 +42,7 @@ class AdapterMainScreen : RecyclerView.Adapter<MainScreenViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setShowDetailCallback(block:(position:Int)->Unit){
+    fun setShowDetailCallback(block: (position: Int) -> Unit) {
         this.detailCallback = block
     }
 }

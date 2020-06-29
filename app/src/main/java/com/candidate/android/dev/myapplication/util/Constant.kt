@@ -23,6 +23,10 @@ class Constant {
             return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png"
         }
 
+        fun getPokemonIndex(url:String):String{
+            return url.substringAfter("pokemon/").substringBefore("/")
+        }
+
 
 
     }

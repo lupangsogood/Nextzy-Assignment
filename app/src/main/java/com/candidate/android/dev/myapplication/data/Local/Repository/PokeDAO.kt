@@ -16,7 +16,7 @@ interface PokeDAO {
     @Query("SELECT * FROM pokename WHERE name LIKE :nameSearch")
     fun getPokemonByName(nameSearch: String?): LiveData<List<PokeIndexResult>>
 
-    @Query("SELECT * FROM pokename LIMIT 20 OFFSET :offset")
+    @Query("SELECT * FROM pokename LIMIT 1000 OFFSET :offset")
     fun getPokemon(offset: Int): LiveData<List<PokeIndexResult>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
