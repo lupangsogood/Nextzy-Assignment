@@ -87,8 +87,6 @@ class DetailFragment : Fragment() {
         val adapterTypes = AdapterPokeType()
         val rv = binding.rvPokeDetailType
         rv.adapter = adapterTypes
-        rv.layoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         adapterTypes.setPokeTypes(data)
     }
 
