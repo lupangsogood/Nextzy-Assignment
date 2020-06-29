@@ -10,8 +10,8 @@
 
     <Button
         android:id="@+id/backBtn"
-        android:layout_width="@dimen/margin_50"
-        android:layout_height="@dimen/margin_50"
+        android:layout_width="@dimen/back_button"
+        android:layout_height="@dimen/back_button"
         android:layout_marginTop="@dimen/margin_8"
         android:background="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"

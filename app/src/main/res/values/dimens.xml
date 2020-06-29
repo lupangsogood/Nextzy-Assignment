@@ -26,5 +26,7 @@
 
     <dimen name="search_height">48dp</dimen>
 
-    <dimen name="poke_sprites_size">160dp</dimen>
+    <dimen name="poke_sprites_size">130dp</dimen>
+
+    <dimen name="back_button">30dp</dimen>
 </resources>

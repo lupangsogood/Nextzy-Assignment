@@ -5,4 +5,8 @@
     <dimen name="margin_60">50dp</dimen>
     <dimen name="margin_70">60dp</dimen>
     <dimen name="margin_80">100dp</dimen>
+
+    <dimen name="poke_sprites_size">160dp</dimen>
+    <dimen name="back_button">35dp</dimen>
+
 </resources>

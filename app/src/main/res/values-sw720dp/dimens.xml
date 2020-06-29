@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="content_width">660dp</dimen>
+
+    <dimen name="poke_sprites_size">180dp</dimen>
+    <dimen name="back_button">50dp</dimen>
+
 </resources>
