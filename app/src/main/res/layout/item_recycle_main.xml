@@ -26,10 +26,10 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/pokeImage"
                 android:layout_width="@dimen/margin_100"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/margin_80"
                 android:scaleType="fitCenter"
                 android:transitionName="@string/transition_image"
-                app:srcCompat="@drawable/ic_launcher_foreground"
+                app:srcCompat="@drawable/test_image"
                 android:visibility="visible"/>
 
             <androidx.appcompat.widget.AppCompatTextView

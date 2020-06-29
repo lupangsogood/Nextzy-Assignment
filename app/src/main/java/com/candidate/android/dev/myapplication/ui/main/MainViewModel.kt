@@ -78,15 +78,10 @@ class MainViewModel(private val service: GetPokemonImpl, private val cache: Poke
     }
 
     fun setUpPokeMainData(data: List<PokeIndexResult>) {
-        if (!backPress) {
             CoroutineScope(Main).launch {
                 _pokemonList.value!!.addAll(data)
                 _pokemonList.notifyObserver()
-            }
-        } else {
-            CoroutineScope(Main).launch {
-                _pokemonList.notifyObserver()
-            }
+                isNotBackPress()
         }
     }
 

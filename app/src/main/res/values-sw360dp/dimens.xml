@@ -3,5 +3,6 @@
     <dimen name="content_width">340dp</dimen>
 
     <dimen name="margin_60">50dp</dimen>
-
+    <dimen name="margin_70">60dp</dimen>
+    <dimen name="margin_80">100dp</dimen>
 </resources>

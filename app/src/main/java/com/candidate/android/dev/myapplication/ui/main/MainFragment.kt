@@ -41,22 +41,24 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            viewModel.pokemonCacheData.observe(viewLifecycleOwner, Observer { data ->
-                if (data.isNullOrEmpty()) {
-                    CoroutineScope(IO).launch {
-                        viewModel.getPokemonList()
-                    }
+        viewModel.pokemonCacheData.observe(viewLifecycleOwner, Observer { data ->
+            if (data.isNullOrEmpty()) {
+                CoroutineScope(IO).launch {
+                    viewModel.getPokemonList()
+                }
+            } else {
+                if (!viewModel.backPress) {
+                    viewModel.setUpPokeMainData(data)
                 } else {
-                    viewModel.setUpPokeMainData(data)
+                    reloadData()
                 }
-            })
-            viewModel.pokemonOnceData.observe(viewLifecycleOwner, Observer { data ->
-                if (!data.isNullOrEmpty()) {
-                    viewModel.setUpPokeMainData(data)
-                }
-            })
-        }
+            }
+        })
+        viewModel.pokemonOnceData.observe(viewLifecycleOwner, Observer { data ->
+            if (!data.isNullOrEmpty()) {
+                viewModel.setUpPokeMainData(data)
+            }
+        })
         initInstance()
 
     }
@@ -73,7 +75,11 @@ class MainFragment : Fragment() {
 
             when (!data.isNullOrEmpty()) {
                 true -> {
-                    setupPokeData(data)
+                    if (!viewModel.backPress) {
+                        setupPokeData(data)
+                    } else {
+                        reloadData()
+                    }
                 }
             }
         })
@@ -108,7 +114,6 @@ class MainFragment : Fragment() {
         adapter.setPokeData(pokedDataList)
         viewModel.isCanScroll()
         viewModel.isNotShowRefresh()
-        viewModel.isNotBackPress()
         viewModel.isNotPullRefresh()
         when (flag) {
             true -> {
@@ -131,13 +136,7 @@ class MainFragment : Fragment() {
 
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
-            clearAutoCompText()
-            viewModel.isNotBackPress()
-            viewModel.isShowRefresh()
-            viewModel.isPullRefresh()
-            CoroutineScope(IO).launch {
-                viewModel.getRefreshPokemon()
-            }
+            reloadData()
         }
     }
 
@@ -195,5 +194,15 @@ class MainFragment : Fragment() {
 
     private fun clearEditTextFocus() {
         binding.searchEditText.clearFocus()
+    }
+
+    private fun reloadData(){
+        clearAutoCompText()
+        viewModel.isNotBackPress()
+        viewModel.isShowRefresh()
+        viewModel.isPullRefresh()
+        CoroutineScope(IO).launch {
+            viewModel.getRefreshPokemon()
+        }
     }
 }
